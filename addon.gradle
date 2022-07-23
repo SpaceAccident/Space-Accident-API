@@ -13,7 +13,7 @@ buildConfig {
     buildConfigField('String', 'MODNAME', "\"${project.modName}\"")
     buildConfigField('String', 'VERSION', "\"${project.modVersion}\"")
     buildConfigField('String', 'GROUPNAME', "\"${project.modGroup}\"")
-    buildConfigField('String', 'ASSETS', "\"virtualores\"")
+    buildConfigField('String', 'ASSETS', "\"sa\"")
     useKotlinOutput { topLevelConstants = true }
 }
 
