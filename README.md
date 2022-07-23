@@ -1,3 +1,3 @@
-# Space-Accident | Virtual Ores
+# Space-Accident | API
 
-[![](https://jitpack.io/v/SpaceAccident/Virtual-Ores.svg)](https://jitpack.io/#SpaceAccident/Virtual-Ores)
+[![](https://jitpack.io/v/SpaceAccident/Space-Accident-API.svg)](https://jitpack.io/#SpaceAccident/Space-Accident-API)
