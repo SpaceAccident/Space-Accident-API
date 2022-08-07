@@ -10,17 +10,17 @@ import java.util.List;
 
 public interface IItemBehaviour<ITEM extends Item> {
 	
-	boolean onLeftClickEntity(ITEM aItem, ItemStack aStack, EntityPlayer aPlayer, Entity aEntity);
+	boolean onLeftClickEntity(ITEM aItem, ItemStack stack, EntityPlayer player, Entity entity);
 	
-	boolean onItemUse(ITEM aItem, ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, int aSide, float hitX, float hitY, float hitZ);
+	boolean onItemUse(ITEM aItem, ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ);
 	
-	boolean onItemUseFirst(ITEM aItem, ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, int aSide, float hitX, float hitY, float hitZ);
+	boolean onItemUseFirst(ITEM aItem, ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ);
 	
-	ItemStack onItemRightClick(ITEM aItem, ItemStack aStack, World aWorld, EntityPlayer aPlayer);
+	ItemStack onItemRightClick(ITEM aItem, ItemStack stack, World world, EntityPlayer player);
 	
-	List<String> getAdditionalToolTips(ITEM aItem, List<String> aList, ItemStack aStack);
+	List<String> getAdditionalToolTips(ITEM aItem, List<String> aList, ItemStack stack);
 	
-	void onUpdate(ITEM aItem, ItemStack aStack, World aWorld, Entity aPlayer, int aTimer, boolean aIsInHand);
+	void onUpdate(ITEM aItem, ItemStack stack, World world, Entity player, int aTimer, boolean aIsInHand);
 	
-	boolean isItemStackUsable(ITEM aItem, ItemStack aStack);
+	boolean isItemStackUsable(ITEM aItem, ItemStack stack);
 }

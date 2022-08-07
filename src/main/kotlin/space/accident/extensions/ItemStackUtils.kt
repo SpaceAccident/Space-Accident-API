@@ -3,7 +3,7 @@ package space.accident.extensions
 import ic2.api.item.IElectricItem
 import net.minecraft.item.ItemStack
 import space.accident.api.enums.Values.W
-import space.accident.api.objects.GT_ItemStack
+import space.accident.api.objects.ItemStackData
 
 object ItemStackUtils {
 
@@ -24,12 +24,12 @@ object ItemStackUtils {
     }
 
     @JvmStatic
-    public fun ItemStack?.isStackInList( aList: Collection<GT_ItemStack?>): Boolean {
-        return if (this == null) false else GT_ItemStack(this).isStackInList(aList)
+    public fun ItemStack?.isStackInList( aList: Collection<ItemStackData?>): Boolean {
+        return if (this == null) false else ItemStackData(this).isStackInList(aList)
     }
 
     @JvmStatic
-    public fun GT_ItemStack?.isStackInList(aList: Collection<GT_ItemStack?>): Boolean {
-        return this != null && (aList.contains(this) || aList.contains(GT_ItemStack(this.mItem, this.mStackSize.toLong(), W.toLong())))
+    public fun ItemStackData?.isStackInList(aList: Collection<ItemStackData?>): Boolean {
+        return this != null && (aList.contains(this) || aList.contains(ItemStackData(this.mItem, this.mStackSize.toLong(), W.toLong())))
     }
 }

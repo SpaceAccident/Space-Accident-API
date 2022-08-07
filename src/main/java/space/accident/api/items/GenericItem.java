@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import space.accident.api.util.GT_LanguageManager;
+import space.accident.api.util.LanguageManager;
 import space.accident.extensions.ItemStackUtils;
 import space.accident.extensions.StringUtils;
 
@@ -32,9 +32,9 @@ public class GenericItem extends Item {
 	public GenericItem(String unLocalName, String englishName, String englishTooltip, boolean needTooltipToLang) {
 		super();
 		name = "sa." + unLocalName;
-		GT_LanguageManager.addStringLocalization(name + ".name", englishName);
+		LanguageManager.addStringLocalization(name + ".name", englishName);
 		if (StringUtils.isStringValid(englishTooltip)) {
-			GT_LanguageManager.addStringLocalization(tooltip = name + ".tooltip_main", englishTooltip, needTooltipToLang);
+			LanguageManager.addStringLocalization(tooltip = name + ".tooltip_main", englishTooltip, needTooltipToLang);
 		} else {
 			tooltip = null;
 		}
@@ -42,7 +42,7 @@ public class GenericItem extends Item {
 	}
 	
 	@Override
-	public final Item setUnlocalizedName(String aName) {
+	public final Item setUnlocalizedName(String name) {
 		return this;
 	}
 	
@@ -63,7 +63,7 @@ public class GenericItem extends Item {
 	}
 	
 	@Override
-	public boolean doesSneakBypassUse(World world, int aX, int aY, int aZ, EntityPlayer player) {
+	public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player) {
 		return true;
 	}
 	
@@ -81,10 +81,10 @@ public class GenericItem extends Item {
 	public void addInformation(ItemStack stack, EntityPlayer player, List tooltips, boolean aF3_H) {
 		if (getMaxDamage() > 0 && !getHasSubtypes()) tooltips.add((stack.getMaxDamage() - getDamage(stack)) + " / " + stack.getMaxDamage());
 		if (tooltip != null) {
-			tooltips.add(GT_LanguageManager.getTranslation(tooltip));
+			tooltips.add(LanguageManager.getTranslation(tooltip));
 		}
 		if (ItemStackUtils.isElectricItem(stack)) {
-			tooltips.add(String.format(GT_LanguageManager.getTranslation("Item_DESCRIPTION_Index_019"), getTier(stack) + ""));
+			tooltips.add(String.format(LanguageManager.getTranslation("Item_DESCRIPTION_Index_019"), getTier(stack) + ""));
 		}
 		addToolTip(tooltips, stack, player);
 	}
@@ -110,7 +110,7 @@ public class GenericItem extends Item {
 		return getContainerItem(stack) != null;
 	}
 	
-	public String transItem(String key, String english) {
-		return GT_LanguageManager.addStringLocalization("Item_DESCRIPTION_Index_" + key, english, false);
+	public static String transItem(String key, String english) {
+		return LanguageManager.addStringLocalization("Item_DESCRIPTION_Index_" + key, english, false);
 	}
 }

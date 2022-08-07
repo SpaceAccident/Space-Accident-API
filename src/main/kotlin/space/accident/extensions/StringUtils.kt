@@ -1,5 +1,6 @@
 package space.accident.extensions
 
+import space.accident.api.util.LanguageManager
 import java.util.*
 
 object StringUtils {
@@ -17,5 +18,14 @@ object StringUtils {
     @JvmStatic
     fun String?.capitalizeString(): String {
         return if (this != null && this.isNotEmpty()) this.substring(0, 1).uppercase(Locale.getDefault()) + this.substring(1) else ""
+    }
+    @JvmStatic
+    fun String.trans(english: String) : String {
+        return LanguageManager.addStringLocalization(this, english)
+    }
+
+    @JvmStatic
+    fun <T> array(vararg type: T): Array<out T> {
+        return type
     }
 }

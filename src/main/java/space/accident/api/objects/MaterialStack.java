@@ -8,13 +8,13 @@ public class MaterialStack implements Cloneable {
 	public long mAmount;
 	public Materials mMaterial;
 	
-	public MaterialStack(Materials aMaterial, long aAmount) {
+	public MaterialStack(Materials aMaterial, long amount) {
 		mMaterial = aMaterial == null ? MaterialList._NULL : aMaterial;
-		mAmount = aAmount;
+		mAmount = amount;
 	}
 	
-	public MaterialStack copy(long aAmount) {
-		return new MaterialStack(mMaterial, aAmount);
+	public MaterialStack copy(long amount) {
+		return new MaterialStack(mMaterial, amount);
 	}
 	
 	@Override
@@ -38,7 +38,7 @@ public class MaterialStack implements Cloneable {
 		if (mAmount > 1) {
 			temp4 = Utility.toSubscript(mAmount);
 			
-			if (mMaterial.mMaterialList.size() > 1 || isMaterialListComplex(this)) {
+			if (mMaterial.materialList.size() > 1 || isMaterialListComplex(this)) {
 				temp1 = "(";
 				temp3 = ")";
 			}
@@ -47,13 +47,13 @@ public class MaterialStack implements Cloneable {
 	}
 	
 	private boolean isMaterialListComplex(MaterialStack materialStack){
-		if (materialStack.mMaterial.mMaterialList.size() > 1) {
+		if (materialStack.mMaterial.materialList.size() > 1) {
 			return true;
 		}
-		if (materialStack.mMaterial.mMaterialList.size() == 0) {
+		if (materialStack.mMaterial.materialList.size() == 0) {
 			return false;
 		}
-		return isMaterialListComplex(materialStack.mMaterial.mMaterialList.get(0));
+		return isMaterialListComplex(materialStack.mMaterial.materialList.get(0));
 	}
 	
 	@Override

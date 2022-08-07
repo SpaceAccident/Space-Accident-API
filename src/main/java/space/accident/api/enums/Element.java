@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Elements of Mendeleev's Periodic Table
+ */
 public enum Element {
 	
 	_NULL(0, 0, "", "", false),
@@ -25,10 +27,10 @@ public enum Element {
 	 */
 	public ArrayList<Materials> mLinkedMaterials = new ArrayList<>();
 	
-	Element(long aProtons, long aNeutrons, String el, String aName, boolean aIsIsotope) {
+	Element(long aProtons, long aNeutrons, String el, String name, boolean aIsIsotope) {
 		mProtons   = aProtons;
 		mNeutrons  = aNeutrons;
-		mName      = aName;
+		mName      = name;
 		mIsIsotope = aIsIsotope;
 		element    = el;
 		Companion.VALUES.put(name(), this);
@@ -36,14 +38,6 @@ public enum Element {
 	
 	public static Element get(String aMaterialName) {
 		return Companion.VALUES.getOrDefault(aMaterialName, _NULL);
-	}
-	
-	public long getProtons() {
-		return mProtons;
-	}
-	
-	public long getNeutrons() {
-		return mNeutrons;
 	}
 	
 	public long getMass() {

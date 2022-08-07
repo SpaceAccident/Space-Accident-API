@@ -5,17 +5,17 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 
 public interface ITexture {
-	void renderXPos(RenderBlocks aRenderer, Block aBlock, int aX, int aY, int aZ);
+	void renderXPos(RenderBlocks aRenderer, Block block, int x, int y, int z);
 	
-	void renderXNeg(RenderBlocks aRenderer, Block aBlock, int aX, int aY, int aZ);
+	void renderXNeg(RenderBlocks aRenderer, Block block, int x, int y, int z);
 	
-	void renderYPos(RenderBlocks aRenderer, Block aBlock, int aX, int aY, int aZ);
+	void renderYPos(RenderBlocks aRenderer, Block block, int x, int y, int z);
 	
-	void renderYNeg(RenderBlocks aRenderer, Block aBlock, int aX, int aY, int aZ);
+	void renderYNeg(RenderBlocks aRenderer, Block block, int x, int y, int z);
 	
-	void renderZPos(RenderBlocks aRenderer, Block aBlock, int aX, int aY, int aZ);
+	void renderZPos(RenderBlocks aRenderer, Block block, int x, int y, int z);
 	
-	void renderZNeg(RenderBlocks aRenderer, Block aBlock, int aX, int aY, int aZ);
+	void renderZNeg(RenderBlocks aRenderer, Block block, int x, int y, int z);
 	
 	boolean isValidTexture();
 	

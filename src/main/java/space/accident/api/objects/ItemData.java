@@ -44,12 +44,12 @@ public class ItemData {
 		}
 	}
 	
-	public ItemData(Materials aMaterial, long aAmount, MaterialStack... aByProducts) {
-		this(new MaterialStack(aMaterial, aAmount), aByProducts);
+	public ItemData(Materials aMaterial, long amount, MaterialStack... aByProducts) {
+		this(new MaterialStack(aMaterial, amount), aByProducts);
 	}
 	
-	public ItemData(Materials aMaterial, long aAmount, Materials aByProduct, long aByProductAmount) {
-		this(new MaterialStack(aMaterial, aAmount), new MaterialStack(aByProduct, aByProductAmount));
+	public ItemData(Materials aMaterial, long amount, Materials aByProduct, long aByProductAmount) {
+		this(new MaterialStack(aMaterial, amount), new MaterialStack(aByProduct, aByProductAmount));
 	}
 	
 	public ItemData(ItemData... aData) {
@@ -112,8 +112,8 @@ public class ItemData {
 		return rList;
 	}
 	
-//	public final MaterialStack getByProduct(int aIndex) {
-//		return aIndex >= 0 && aIndex < mByProducts.length ? mByProducts[aIndex] : null;
+//	public final MaterialStack getByProduct(int index) {
+//		return index >= 0 && index < mByProducts.length ? mByProducts[index] : null;
 //	}
 	
 	@Override

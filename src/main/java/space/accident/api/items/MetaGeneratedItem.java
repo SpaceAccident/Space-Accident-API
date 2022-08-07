@@ -13,8 +13,8 @@ import space.accident.api.interfaces.IIconContainer;
 import space.accident.api.interfaces.IItemBehaviour;
 import space.accident.api.interfaces.IItemContainer;
 import space.accident.api.objects.ItemData;
-import space.accident.api.util.GT_LanguageManager;
-import space.accident.api.util.GT_OreDictUnificator;
+import space.accident.api.util.LanguageManager;
+import space.accident.api.util.OreDictUnifier;
 import space.accident.extensions.StringUtils;
 
 import java.util.Arrays;
@@ -53,29 +53,29 @@ public abstract class MetaGeneratedItem extends MetaBaseItem {
 	/**
 	 * This adds a Custom Item to the ending Range.
 	 *
-	 * @param aID         The Id of the assigned Item [0 - mItemAmount] (The MetaData gets auto-shifted by +mOffset)
+	 * @param id         The Id of the assigned Item [0 - mItemAmount] (The MetaData gets auto-shifted by +mOffset)
 	 * @param aEnglish    The Default Localized Name of the created Item
 	 * @param aToolTip    The Default ToolTip of the created Item, you can also insert null for having no ToolTip
 	 * @param aRandomData The OreDict Names you want to give the Item. Also used for TC Aspects and some other things.
 	 * @return An ItemStack containing the newly created Item.
 	 */
-	public final ItemStack addItem(int aID, String aEnglish, String aToolTip, Object... aRandomData) {
+	public final ItemStack addItem(int id, String aEnglish, String aToolTip, Object... aRandomData) {
 		if (aToolTip == null) aToolTip = "";
-		if (aID >= 0 && aID < mItemAmount) {
-			ItemStack rStack = new ItemStack(this, 1, mOffset + aID);
-			mEnabledItems.set(aID);
-			mVisibleItems.set(aID);
-			GT_LanguageManager.addStringLocalization(getUnlocalizedName(rStack) + ".name", aEnglish);
-			GT_LanguageManager.addStringLocalization(getUnlocalizedName(rStack) + ".tooltip", aToolTip);
+		if (id >= 0 && id < mItemAmount) {
+			ItemStack rStack = new ItemStack(this, 1, mOffset + id);
+			mEnabledItems.set(id);
+			mVisibleItems.set(id);
+			LanguageManager.addStringLocalization(getUnlocalizedName(rStack) + ".name", aEnglish);
+			LanguageManager.addStringLocalization(getUnlocalizedName(rStack) + ".tooltip", aToolTip);
 			// Important Stuff to do first
 			for (Object tRandomData : aRandomData)
 				if (tRandomData instanceof SubTag) {
 					if (tRandomData == SubTag.INVISIBLE) {
-						mVisibleItems.set(aID, false);
+						mVisibleItems.set(id, false);
 						continue;
 					}
 					if (tRandomData == SubTag.NO_UNIFICATION) {
-						GT_OreDictUnificator.addToBlacklist(rStack);
+						OreDictUnifier.addToBlacklist(rStack);
 						continue;
 					}
 				}
@@ -84,7 +84,7 @@ public abstract class MetaGeneratedItem extends MetaBaseItem {
 				if (tRandomData != null) {
 					boolean tUseOreDict = true;
 					if (tRandomData instanceof IItemBehaviour) {
-						addItemBehavior(mOffset + aID, (IItemBehaviour<MetaBaseItem>) tRandomData);
+						addItemBehavior(mOffset + id, (IItemBehaviour<MetaBaseItem>) tRandomData);
 						tUseOreDict = false;
 					}
 					if (tRandomData instanceof IItemContainer) {
@@ -96,12 +96,12 @@ public abstract class MetaGeneratedItem extends MetaBaseItem {
 					}
 					if (tRandomData instanceof ItemData) {
 						if (StringUtils.isStringValid(tRandomData.toString()))
-							GT_OreDictUnificator.registerOre(tRandomData, rStack);
-						else GT_OreDictUnificator.addItemData(rStack, (ItemData) tRandomData);
+							OreDictUnifier.registerOre(tRandomData, rStack);
+						else OreDictUnifier.addItemData(rStack, (ItemData) tRandomData);
 						continue;
 					}
 					if (tUseOreDict) {
-						GT_OreDictUnificator.registerOre(tRandomData, rStack);
+						OreDictUnifier.registerOre(tRandomData, rStack);
 						continue;
 					}
 				}
@@ -116,13 +116,13 @@ public abstract class MetaGeneratedItem extends MetaBaseItem {
 	 * Sets the Furnace Burn Value for the Item.
 	 *
 	 * @param aMetaValue the Meta Value of the Item you want to set it to. [0 - 32765]
-	 * @param aValue     200 = 1 Burn Process = 500 EU, max = 32767 (that is 81917.5 EU)
+	 * @param value     200 = 1 Burn Process = 500 EU, max = 32767 (that is 81917.5 EU)
 	 * @return the Item itself for convenience in constructing.
 	 */
-	public final MetaGeneratedItem setBurnValue(int aMetaValue, int aValue) {
-		if (aMetaValue < 0 || aMetaValue >= mOffset + mEnabledItems.length() || aValue < 0) return this;
-		if (aValue == 0) mBurnValues.remove((short) aMetaValue);
-		else mBurnValues.put((short) aMetaValue, aValue > Short.MAX_VALUE ? Short.MAX_VALUE : (short) aValue);
+	public final MetaGeneratedItem setBurnValue(int aMetaValue, int value) {
+		if (aMetaValue < 0 || aMetaValue >= mOffset + mEnabledItems.length() || value < 0) return this;
+		if (value == 0) mBurnValues.remove((short) aMetaValue);
+		else mBurnValues.put((short) aMetaValue, value > Short.MAX_VALUE ? Short.MAX_VALUE : (short) value);
 		return this;
 	}
 	
@@ -164,14 +164,14 @@ public abstract class MetaGeneratedItem extends MetaBaseItem {
 	/**
 	 * @return the Color Modulation the Material is going to be rendered with.
 	 */
-	public int[] getRGBa(ItemStack aStack) {
+	public int[] getRGBa(ItemStack stack) {
 		return MaterialList._NULL.getRGBA();
 	}
 	
 	/**
 	 * @return the Icon the Material is going to be rendered with.
 	 */
-	public IIconContainer getIconContainer(int aMetaData) {
+	public IIconContainer getIconContainer(int meta) {
 		return null;
 	}
 	
@@ -204,7 +204,7 @@ public abstract class MetaGeneratedItem extends MetaBaseItem {
 		short j = (short) mEnabledItems.length();
 		for (short i = 0; i < j; i++) {
 			if (mEnabledItems.get(i)) {
-				for (byte k = 1; k < mIconList[i].length; k++) {
+				for (int k = 1; k < mIconList[i].length; k++) {
 					mIconList[i][k] = aIconRegister.registerIcon(RES_PATH_ITEM + (getUnlocalizedName() + "/" + i + "/" + k));
 				}
 				mIconList[i][0] = aIconRegister.registerIcon(RES_PATH_ITEM + (getUnlocalizedName() + "/" + i));
@@ -213,13 +213,13 @@ public abstract class MetaGeneratedItem extends MetaBaseItem {
 	}
 	
 	@Override
-	public final Long[] getElectricStats(ItemStack aStack) {
-		return mElectricStats.get((short) aStack.getItemDamage());
+	public final Long[] getElectricStats(ItemStack stack) {
+		return mElectricStats.get((short) stack.getItemDamage());
 	}
 	
 	@Override
-	public final Long[] getFluidContainerStats(ItemStack aStack) {
-		return mFluidContainerStats.get((short) aStack.getItemDamage());
+	public final Long[] getFluidContainerStats(ItemStack stack) {
+		return mFluidContainerStats.get((short) stack.getItemDamage());
 	}
 	
 	@Override
@@ -228,12 +228,12 @@ public abstract class MetaGeneratedItem extends MetaBaseItem {
 	}
 	
 	@Override
-	public boolean isBookEnchantable(ItemStack aStack, ItemStack aBook) {
+	public boolean isBookEnchantable(ItemStack stack, ItemStack aBook) {
 		return false;
 	}
 	
 	@Override
-	public boolean getIsRepairable(ItemStack aStack, ItemStack aMaterial) {
+	public boolean getIsRepairable(ItemStack stack, ItemStack aMaterial) {
 		return false;
 	}
 }

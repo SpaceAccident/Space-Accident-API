@@ -23,22 +23,22 @@ public class SubTag implements ICondition<ISubTagContainer> {
 	public final long mSubtagID;
 	public final String mName;
 	
-	private SubTag(String aName) {
+	private SubTag(String name) {
 		mSubtagID = sSubtagID++;
-		mName = aName;
-		sSubTags.put(aName, this);
+		mName = name;
+		sSubTags.put(name, this);
 	}
 	
 	public final Collection<ISubTagContainer> mRelevantTaggedItems = new HashSet<>(1);
 	public static final HashMap<String, SubTag> sSubTags = new HashMap<>();
 	
-	public static SubTag getNewSubTag(String aName) {
+	public static SubTag getNewSubTag(String name) {
 		for (SubTag tSubTag : sSubTags.values()) {
-			if (tSubTag.mName.equals(aName)) {
+			if (tSubTag.mName.equals(name)) {
 				return tSubTag;
 			}
 		}
-		return new SubTag(aName);
+		return new SubTag(name);
 	}
 	
 	@Override

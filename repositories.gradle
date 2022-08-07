@@ -14,19 +14,7 @@ repositories {
         }
     }
     maven {
-        name = "ic2"
-        url = "https://maven2.ic2.player.to/"
-        metadataSources {
-            mavenPom()
-            artifact()
-        }
-    }
-    maven {
         url "https://cursemaven.com"
-    }
-    maven {
-        name = "jitpack.io"
-        url = "https://jitpack.io"
     }
     maven {
         url = "https://oss.sonatype.org/content/repositories/snapshots/"

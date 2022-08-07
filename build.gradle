@@ -26,7 +26,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.github.GTNewHorizons:ForgeGradle:1.2.7'
+        classpath 'com.github.SpaceAccident:Forge-Gradle-Unofficial:1.2.8'
     }
 }
 
@@ -157,7 +157,6 @@ if(coreModClass) {
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
 
-    // Make sure GregTech build won't time out
     System.setProperty("org.gradle.internal.http.connectionTimeout", 120000 as String)
     System.setProperty("org.gradle.internal.http.socketTimeout", 120000 as String)
 }
@@ -180,7 +179,7 @@ catch (Exception ignored) {
     out.style(Style.Failure).text(
             'This mod must be version controlled by Git AND the repository must provide at least one tag,\n' +
                     'or the VERSION override must be set! ').style(Style.SuccessHeader).text('(Do NOT download from GitHub using the ZIP option, instead\n' +
-            'clone the repository, see ').style(Style.Info).text('https://gtnh.miraheze.org/wiki/Development').style(Style.SuccessHeader).println(' for details.)'
+            'clone the repository, see ').style(Style.Info).text('https://github.com/SpaceAccident/Mod-Example/wiki').style(Style.SuccessHeader).println(' for details.)'
     )
     versionOverride = 'NO-GIT-TAG-SET'
     identifiedVersion = versionOverride
@@ -270,13 +269,13 @@ repositories {
         name 'Overmind forge repo mirror'
         url 'https://gregtech.overminddl1.com/'
     }
+    maven {
+        url 'https://jitpack.io'
+    }
     if(usesMixins.toBoolean()) {
         maven {
             name 'sponge'
             url 'https://repo.spongepowered.org/repository/maven-public'
-        }
-        maven {
-            url 'https://jitpack.io'
         }
     }
 }
@@ -569,7 +568,7 @@ if (isNewBuildScriptVersionAvailable(projectDir.toString())) {
 }
 
 static URL availableBuildScriptUrl() {
-    new URL("https://raw.githubusercontent.com/GTNewHorizons/ExampleMod1.7.10/main/build.gradle")
+    new URL("https://raw.githubusercontent.com/SpaceAccident/Mod-Example/main/build.gradle")
 }
 
 boolean performBuildScriptUpdate(String projectDir) {

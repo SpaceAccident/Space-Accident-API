@@ -26,8 +26,8 @@ public class MetaGeneratedItemRenderer implements IItemRenderer {
 	}
 	
 	@Override
-	public boolean handleRenderType(ItemStack aStack, IItemRenderer.ItemRenderType aType) {
-		if ((ItemStackUtils.isStackInvalid(aStack)) || (aStack.getItemDamage() < 0)) {
+	public boolean handleRenderType(ItemStack stack, IItemRenderer.ItemRenderType aType) {
+		if ((ItemStackUtils.isStackInvalid(stack)) || (stack.getItemDamage() < 0)) {
 			return false;
 		}
 		return (aType == IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON)
@@ -37,20 +37,20 @@ public class MetaGeneratedItemRenderer implements IItemRenderer {
 	}
 	
 	@Override
-	public boolean shouldUseRenderHelper(IItemRenderer.ItemRenderType aType, ItemStack aStack, IItemRenderer.ItemRendererHelper aHelper) {
-		if (ItemStackUtils.isStackInvalid(aStack)) {
+	public boolean shouldUseRenderHelper(IItemRenderer.ItemRenderType aType, ItemStack stack, IItemRenderer.ItemRendererHelper aHelper) {
+		if (ItemStackUtils.isStackInvalid(stack)) {
 			return false;
 		}
 		return aType == IItemRenderer.ItemRenderType.ENTITY;
 	}
 	
 	@Override
-	public void renderItem(IItemRenderer.ItemRenderType type, ItemStack aStack, Object... data) {
-		if (ItemStackUtils.isStackInvalid(aStack)) return;
-		short aMetaData = (short) aStack.getItemDamage();
-		if (aMetaData < 0) return;
+	public void renderItem(IItemRenderer.ItemRenderType type, ItemStack stack, Object... data) {
+		if (ItemStackUtils.isStackInvalid(stack)) return;
+		short meta = (short) stack.getItemDamage();
+		if (meta < 0) return;
 		
-		MetaGeneratedItem aItem = (MetaGeneratedItem) aStack.getItem();
+		MetaGeneratedItem aItem = (MetaGeneratedItem) stack.getItem();
 		
 		GL11.glEnable(GL11.GL_BLEND);
 		
@@ -65,13 +65,13 @@ public class MetaGeneratedItemRenderer implements IItemRenderer {
 		}
 		
 		GL11.glColor3f(1.0F, 1.0F, 1.0F);
-		if (aMetaData < aItem.mOffset) {
-			IIconContainer aIcon = aItem.getIconContainer(aMetaData);
+		if (meta < aItem.mOffset) {
+			IIconContainer aIcon = aItem.getIconContainer(meta);
 			IIcon tOverlay = null;
 			IIcon fluidIcon = null;
 			IIcon tIcon;
 			if (aIcon == null) {
-				tIcon = aStack.getIconIndex();
+				tIcon = stack.getIconIndex();
 			} else {
 				tIcon = aIcon.getIcon();
 				tOverlay = aIcon.getOverlayIcon();
@@ -79,7 +79,7 @@ public class MetaGeneratedItemRenderer implements IItemRenderer {
 			if (tIcon == null) {
 				return;
 			}
-			FluidStack tFluid = Utility.getFluidForFilledItem(aStack, true);
+			FluidStack tFluid = Utility.getFluidForFilledItem(stack, true);
 			
 			if (tOverlay != null && tFluid != null && tFluid.getFluid() != null) {
 				fluidIcon = tFluid.getFluid().getIcon(tFluid);
@@ -87,7 +87,7 @@ public class MetaGeneratedItemRenderer implements IItemRenderer {
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationItemsTexture);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			if (fluidIcon == null) {
-				int[] tModulation = aItem.getRGBa(aStack);
+				int[] tModulation = aItem.getRGBa(stack);
 				GL11.glColor3f(tModulation[0] / 255.0F, tModulation[1] / 255.0F, tModulation[2] / 255.0F);
 			}
 			if (type.equals(IItemRenderer.ItemRenderType.INVENTORY)) {
@@ -114,27 +114,27 @@ public class MetaGeneratedItemRenderer implements IItemRenderer {
 			}
 		} else {
 			IIcon tIcon;
-			if (aItem.mIconList[(aMetaData - aItem.mOffset)].length > 1) {
-				Long[] tStats = aItem.mElectricStats.get(aMetaData);
+			if (aItem.mIconList[(meta - aItem.mOffset)].length > 1) {
+				Long[] tStats = aItem.mElectricStats.get(meta);
 				
 				if ((tStats != null) && (tStats[3] < 0L)) {
-					long tCharge = aItem.getRealCharge(aStack);
+					long tCharge = aItem.getRealCharge(stack);
 					
 					if (tCharge <= 0L) {
-						tIcon = aItem.mIconList[(aMetaData - aItem.mOffset)][1];
+						tIcon = aItem.mIconList[(meta - aItem.mOffset)][1];
 					} else {
 						
 						if (tCharge >= tStats[0]) {
-							tIcon = aItem.mIconList[(aMetaData - aItem.mOffset)][8];
+							tIcon = aItem.mIconList[(meta - aItem.mOffset)][8];
 						} else {
-							tIcon = aItem.mIconList[(aMetaData - aItem.mOffset)][(7 - (int) Math.max(0L, Math.min(5L, (tStats[0] - tCharge) * 6L / tStats[0])))];
+							tIcon = aItem.mIconList[(meta - aItem.mOffset)][(7 - (int) Math.max(0L, Math.min(5L, (tStats[0] - tCharge) * 6L / tStats[0])))];
 						}
 					}
 				} else {
-					tIcon = aItem.mIconList[(aMetaData - aItem.mOffset)][0];
+					tIcon = aItem.mIconList[(meta - aItem.mOffset)][0];
 				}
 			} else {
-				tIcon = aItem.mIconList[(aMetaData - aItem.mOffset)][0];
+				tIcon = aItem.mIconList[(meta - aItem.mOffset)][0];
 			}
 			
 			if (tIcon == null) {

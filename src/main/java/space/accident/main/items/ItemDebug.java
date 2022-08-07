@@ -14,6 +14,9 @@ import java.util.List;
 
 public class ItemDebug extends GenericItem {
 	
+	public static void register() {
+		new ItemDebug();
+	}
 	public ItemDebug() {
 		super("item_debug", "Debug Item", "");
 	}
@@ -30,15 +33,14 @@ public class ItemDebug extends GenericItem {
 		super.registerIcons(aIconRegister);
 		
 		if (API.sPostloadFinished) {
-			SpaceLog.out.println("GT_Mod: Starting Item Icon Load Phase");
+			SpaceLog.FML_LOGGER.info("GT_Mod: Starting Item Icon Load Phase");
 			API.sItemIcons = aIconRegister;
 			try {
 				API.sGTItemIconload.forEach(Runnable::run);
 			} catch (Throwable e) {
 				e.printStackTrace(SpaceLog.err);
 			}
-			SpaceLog.out.println("GT_Mod: Finished Item Icon Load Phase");
+			SpaceLog.FML_LOGGER.info("GT_Mod: Finished Item Icon Load Phase");
 		}
 	}
-	
 }
